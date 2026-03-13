@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevPortfolio — Projeler & Çalışmalar</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+  <!-- Google Fonts: Syne (display) + DM Sans (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container">
+
+      <!-- Logo -->
+      <a class="navbar-brand" href="#hero">
+        <span class="brand-bracket">{</span>
+        <span class="brand-name">dev</span>
+        <span class="brand-dot">.</span>
+        <span class="brand-bracket">}</span>
+      </a>
+
+      <!-- Dark Mode Toggle (masaüstü) -->
+      <div class="d-flex align-items-center order-lg-last ms-lg-3">
+        <button class="theme-toggle" id="themeToggle" aria-label="Temayı değiştir">
+          <i class="bi bi-sun-fill" id="themeIcon"></i>
+        </button>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="false" aria-label="Menüyü aç/kapat">
+        <span class="toggler-bar"></span>
+        <span class="toggler-bar"></span>
+        <span class="toggler-bar"></span>
+      </button>
+
+      <!-- Nav Links -->
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#projects">Projeler</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">Hakkımda</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">İletişim</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+  <!-- /NAVBAR -->
+
+
+  <!-- ========== HERO ========== -->
+  <section id="hero" class="hero-section d-flex align-items-center">
+    <!-- Dekoratif arka plan grid -->
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <div class="container position-relative z-1">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+
+          <!-- Etiket -->
+          <div class="hero-label mb-3">
+            <span class="badge-label">
+              <i class="bi bi-circle-fill pulse-dot"></i>
+              Açık İşbirliğine
+            </span>
+          </div>
+
+          <!-- Başlık -->
+          <h1 class="hero-title">
+            Kod yazıyorum,<br />
+            <span class="hero-accent">deneyim</span> tasarlıyorum.
+          </h1>
+
+          <!-- Açıklama -->
+          <p class="hero-desc">
+            Full-stack geliştirici olarak modern web uygulamaları ve açık kaynak
+            projeleri geliştiriyorum. Temiz kod, güçlü mimari, etkileyici arayüzler.
+          </p>
+
+          <!-- CTA Butonlar -->
+          <div class="hero-cta d-flex flex-wrap gap-3">
+            <a href="#projects" class="btn btn-primary-custom">
+              Projelerimi Gör
+              <i class="bi bi-arrow-down-right ms-2"></i>
+            </a>
+            <a href="#contact" class="btn btn-outline-custom">
+              İletişime Geç
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Sağ: dekoratif kutu -->
+        <div class="col-lg-4 d-none d-lg-flex justify-content-end">
+          <div class="hero-deco-card">
+            <div class="deco-line"></div>
+            <div class="deco-stat">
+              <span class="deco-number">12+</span>
+              <span class="deco-label">Tamamlanan Proje</span>
+            </div>
+            <div class="deco-divider"></div>
+            <div class="deco-stat">
+              <span class="deco-number">3+</span>
+              <span class="deco-label">Yıl Deneyim</span>
+            </div>
+            <div class="deco-divider"></div>
+            <div class="deco-stat">
+              <span class="deco-number">8k+</span>
+              <span class="deco-label">GitHub Commit</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- /HERO -->
+
+
+  <!-- ========== PROJELER ========== -->
+  <section id="projects" class="projects-section">
+    <div class="container">
+
+      <!-- Bölüm başlığı -->
+      <div class="section-header">
+        <span class="section-tag">// seçili çalışmalar</span>
+        <h2 class="section-title">Projeler</h2>
+        <p class="section-desc">
+          Üzerinde çalıştığım açık kaynak ve kişisel projelerden bir seçki.
+        </p>
+      </div>
+
+      <!-- Filtre Butonları -->
+      <div class="filter-bar d-flex flex-wrap gap-2 mb-5" role="group" aria-label="Proje filtrele">
+        <button class="filter-btn active" data-filter="all">Tümü</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="mobile">Mobil</button>
+        <button class="filter-btn" data-filter="ai">AI / ML</button>
+      </div>
+
+      <!-- Proje Kartları -->
+      <div class="row g-4" id="projectGrid">
+
+        <!-- Proje 1 -->
+        <div class="col-md-6 col-xl-4 project-item" data-category="web">
+          <div class="project-card">
+            <div class="card-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
+                alt="CodeCollab — Gerçek Zamanlı Kod Editörü"
+                loading="lazy"
+              />
+              <div class="card-img-overlay">
+                <span class="tech-badge">React</span>
+                <span class="tech-badge">WebSocket</span>
+                <span class="tech-badge">Node.js</span>
+              </div>
+            </div>
+            <div class="card-body-custom">
+              <h3 class="project-name">CodeCollab</h3>
+              <p class="project-desc">
+                Ekip arkadaşlarınızla eş zamanlı kod yazmanızı sağlayan,
+                Monaco editör tabanlı gerçek zamanlı işbirliği platformu.
+              </p>
+              <div class="card-actions">
+                <a href="https://github.com" target="_blank" rel="noopener" class="btn-card btn-github">
+                  <i class="bi bi-github"></i> GitHub
+                </a>
+                <a href="#" target="_blank" rel="noopener" class="btn-card btn-demo">
+                  <i class="bi bi-box-arrow-up-right"></i> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Proje 1 -->
+
+        <!-- Proje 2 -->
+        <div class="col-md-6 col-xl-4 project-item" data-category="ai">
+          <div class="project-card">
+            <div class="card-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80"
+                alt="NeuralNotes — AI Not Asistanı"
+                loading="lazy"
+              />
+              <div class="card-img-overlay">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">FastAPI</span>
+                <span class="tech-badge">OpenAI</span>
+              </div>
+            </div>
+            <div class="card-body-custom">
+              <h3 class="project-name">NeuralNotes</h3>
+              <p class="project-desc">
+                Notlarınızı LLM ile özetleyen, soru-cevap yapabilen ve
+                bağlantı kurmanıza yardımcı olan akıllı not uygulaması.
+              </p>
+              <div class="card-actions">
+                <a href="https://github.com" target="_blank" rel="noopener" class="btn-card btn-github">
+                  <i class="bi bi-github"></i> GitHub
+                </a>
+                <a href="#" target="_blank" rel="noopener" class="btn-card btn-demo">
+                  <i class="bi bi-box-arrow-up-right"></i> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Proje 2 -->
+
+        <!-- Proje 3 -->
+        <div class="col-md-6 col-xl-4 project-item" data-category="mobile">
+          <div class="project-card">
+            <div class="card-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80"
+                alt="TrackFlow — Alışkanlık Takip Uygulaması"
+                loading="lazy"
+              />
+              <div class="card-img-overlay">
+                <span class="tech-badge">Flutter</span>
+                <span class="tech-badge">Firebase</span>
+                <span class="tech-badge">Dart</span>
+              </div>
+            </div>
+            <div class="card-body-custom">
+              <h3 class="project-name">TrackFlow</h3>
+              <p class="project-desc">
+                Günlük alışkanlıklarınızı görselleştiren, streak sayacı ve
+                haftalık raporlar sunan çapraz platform mobil uygulama.
+              </p>
+              <div class="card-actions">
+                <a href="https://github.com" target="_blank" rel="noopener" class="btn-card btn-github">
+                  <i class="bi bi-github"></i> GitHub
+                </a>
+                <a href="#" target="_blank" rel="noopener" class="btn-card btn-demo">
+                  <i class="bi bi-box-arrow-up-right"></i> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Proje 3 -->
+
+        <!-- Proje 4 -->
+        <div class="col-md-6 col-xl-4 project-item" data-category="web">
+          <div class="project-card">
+            <div class="card-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                alt="DataViz Dashboard — Analitik Paneli"
+                loading="lazy"
+              />
+              <div class="card-img-overlay">
+                <span class="tech-badge">Next.js</span>
+                <span class="tech-badge">D3.js</span>
+                <span class="tech-badge">PostgreSQL</span>
+              </div>
+            </div>
+            <div class="card-body-custom">
+              <h3 class="project-name">DataViz Dashboard</h3>
+              <p class="project-desc">
+                Gerçek zamanlı veri akışlarını interaktif grafik ve haritalarla
+                görselleştiren kurumsal analitik paneli.
+              </p>
+              <div class="card-actions">
+                <a href="https://github.com" target="_blank" rel="noopener" class="btn-card btn-github">
+                  <i class="bi bi-github"></i> GitHub
+                </a>
+                <a href="#" target="_blank" rel="noopener" class="btn-card btn-demo">
+                  <i class="bi bi-box-arrow-up-right"></i> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Proje 4 -->
+
+        <!-- Proje 5 -->
+        <div class="col-md-6 col-xl-4 project-item" data-category="ai">
+          <div class="project-card">
+            <div class="card-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80"
+                alt="PixelMind — AI Görsel Üretici"
+                loading="lazy"
+              />
+              <div class="card-img-overlay">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Stable Diffusion</span>
+                <span class="tech-badge">Gradio</span>
+              </div>
+            </div>
+            <div class="card-body-custom">
+              <h3 class="project-name">PixelMind</h3>
+              <p class="project-desc">
+                Metin girdisiyle özelleştirilmiş görseller üreten,
+                fine-tuning desteğine sahip yerel AI görsel üretici araç.
+              </p>
+              <div class="card-actions">
+                <a href="https://github.com" target="_blank" rel="noopener" class="btn-card btn-github">
+                  <i class="bi bi-github"></i> GitHub
+                </a>
+                <a href="#" target="_blank" rel="noopener" class="btn-card btn-demo">
+                  <i class="bi bi-box-arrow-up-right"></i> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Proje 5 -->
+
+        <!-- Proje 6 -->
+        <div class="col-md-6 col-xl-4 project-item" data-category="web">
+          <div class="project-card">
+            <div class="card-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80"
+                alt="ShopStack — E-ticaret Platformu"
+                loading="lazy"
+              />
+              <div class="card-img-overlay">
+                <span class="tech-badge">Vue 3</span>
+                <span class="tech-badge">Nuxt</span>
+                <span class="tech-badge">Stripe</span>
+              </div>
+            </div>
+            <div class="card-body-custom">
+              <h3 class="project-name">ShopStack</h3>
+              <p class="project-desc">
+                SSR destekli, Stripe entegrasyonlu tam özellikli e-ticaret
+                çözümü. Yönetim paneli ve stok takibi dahil.
+              </p>
+              <div class="card-actions">
+                <a href="https://github.com" target="_blank" rel="noopener" class="btn-card btn-github">
+                  <i class="bi bi-github"></i> GitHub
+                </a>
+                <a href="#" target="_blank" rel="noopener" class="btn-card btn-demo">
+                  <i class="bi bi-box-arrow-up-right"></i> Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Proje 6 -->
+
+      </div>
+      <!-- /Proje Kartları -->
+
+    </div>
+  </section>
+  <!-- /PROJELER -->
+
+
+  <!-- ========== HAKKIMDA ========== -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+
+        <!-- Sol: Görsel -->
+        <div class="col-lg-5">
+          <div class="about-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=800&q=80"
+              alt="Geliştirme ortamı"
+              class="about-img"
+            />
+            <div class="about-img-badge">
+              <i class="bi bi-code-slash"></i>
+              <span>Full-Stack Dev</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sağ: Metin -->
+        <div class="col-lg-7">
+          <span class="section-tag">// ben kimim</span>
+          <h2 class="section-title mt-2">Hakkımda</h2>
+          <p class="about-text">
+            Merhaba! Ben Ahmet, kullanıcı odaklı web uygulamaları ve açık kaynak
+            araçlar geliştiren bir yazılım geliştiriciyim. Temiz mimariye,
+            performansa ve erişilebilirliğe önem veriyorum.
+          </p>
+          <p class="about-text">
+            Gündüz startup'larda ürün geliştiriyor, geceleri açık kaynak projelere
+            katkı sağlıyorum. Kod kadar tasarıma da önem verdiğimi fark etmişsinizdir.
+          </p>
+
+          <!-- Teknoloji etiketleri -->
+          <div class="tech-stack d-flex flex-wrap gap-2 mt-4">
+            <span class="stack-tag">TypeScript</span>
+            <span class="stack-tag">React</span>
+            <span class="stack-tag">Next.js</span>
+            <span class="stack-tag">Node.js</span>
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">PostgreSQL</span>
+            <span class="stack-tag">Docker</span>
+            <span class="stack-tag">AWS</span>
+          </div>
+
+          <a href="#contact" class="btn btn-primary-custom mt-4">
+            Seninle Çalışalım
+            <i class="bi bi-arrow-right ms-2"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- /HAKKIMDA -->
+
+
+  <!-- ========== İLETİŞİM ========== -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="contact-inner">
+
+        <div class="text-center mb-5">
+          <span class="section-tag">// iletişim</span>
+          <h2 class="section-title mt-2">Bir Proje mi Var?</h2>
+          <p class="section-desc">
+            Fikirlerinizi gerçeğe dönüştürmek için buradayım.
+            Hadi konuşalım.
+          </p>
+        </div>
+
+        <!-- İletişim Formu -->
+        <div class="row justify-content-center">
+          <div class="col-lg-7">
+            <form class="contact-form" id="contactForm" novalidate>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="form-group-custom">
+                    <label for="name">Ad Soyad</label>
+                    <input type="text" id="name" class="form-input" placeholder="Adınız" required />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group-custom">
+                    <label for="email">E-posta</label>
+                    <input type="email" id="email" class="form-input" placeholder="ornek@mail.com" required />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group-custom">
+                    <label for="subject">Konu</label>
+                    <input type="text" id="subject" class="form-input" placeholder="Proje fikrim var..." />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group-custom">
+                    <label for="message">Mesaj</label>
+                    <textarea id="message" class="form-input" rows="5" placeholder="Merhaba, seninle..." required></textarea>
+                  </div>
+                </div>
+                <div class="col-12 text-center">
+                  <button type="submit" class="btn btn-primary-custom w-100">
+                    Gönder
+                    <i class="bi bi-send ms-2"></i>
+                  </button>
+                </div>
+              </div>
+
+            </form>
+            <!-- Başarı mesajı (gizli) -->
+            <div id="formSuccess" class="form-success d-none">
+              <i class="bi bi-check-circle-fill"></i>
+              Mesajın alındı! En kısa sürede dönüş yapacağım.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- /İLETİŞİM -->
+
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+
+        <!-- Logo -->
+        <a class="navbar-brand" href="#hero">
+          <span class="brand-bracket">{</span>
+          <span class="brand-name">dev</span>
+          <span class="brand-dot">.</span>
+          <span class="brand-bracket">}</span>
+        </a>
+
+        <!-- Copyright -->
+        <p class="footer-copy mb-0">
+          &copy; <span id="footerYear"></span> Ahmet Yılmaz. Tüm hakları saklıdır.
+        </p>
+
+        <!-- Sosyal medya -->
+        <div class="social-links d-flex gap-3">
+          <a href="https://github.com" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+            <i class="bi bi-github"></i>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link" aria-label="Twitter / X">
+            <i class="bi bi-twitter-x"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+  <!-- /FOOTER -->
+
+
+  <!-- Sayfa başına dön butonu -->
+  <button class="back-to-top" id="backToTop" aria-label="Sayfanın başına dön">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+
+</body>
+</html>
