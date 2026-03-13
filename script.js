@@ -205,25 +205,43 @@ backToTopBtn.addEventListener('click', () => {
 });
 
 
-/* ─── 7. İletişim Formu (Demo Gönderim) ─────────────────────────────────── */
+/* ─── 7. İletişim Formu (WhatsApp Gönderim) ─────────────────────────────── */
 const contactForm   = document.getElementById('contactForm');
 const formSuccess   = document.getElementById('formSuccess');
+
+// WhatsApp telefon numarası (format: uluslararası format, boşluksuz)
+const WHATSAPP_PHONE = '905300119711'; // +90 530 011 97 11
 
 if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Basit doğrulama
+    // Form verilerini al
     const name    = document.getElementById('name').value.trim();
     const email   = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value.trim();
     const message = document.getElementById('message').value.trim();
 
+    // Basit doğrulama
     if (!name || !email || !message) {
       // Boş alan varsa hafifçe salla
       contactForm.style.animation = 'shake 0.4s ease';
       setTimeout(() => { contactForm.style.animation = ''; }, 400);
       return;
     }
+
+    // WhatsApp mesajını oluştur
+    const whatsappMessage = `*Yeni İletişim Formu Mesajı*%0A%0A` +
+                           `👤 *Ad Soyad:* ${encodeURIComponent(name)}%0A` +
+                           `📧 *E-posta:* ${encodeURIComponent(email)}%0A` +
+                           `📝 *Konu:* ${encodeURIComponent(subject || 'Belirtilmemiş')}%0A%0A` +
+                           `💬 *Mesaj:*%0A${encodeURIComponent(message)}`;
+
+    // WhatsApp API URL'i oluştur
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${whatsappMessage}`;
+
+    // Yeni sekmede WhatsApp'ı aç
+    window.open(whatsappUrl, '_blank');
 
     // Demo: form gizle, başarı mesajı göster
     contactForm.classList.add('d-none');
