@@ -1,492 +1,457 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="dark">
+<html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ersin Bulut — C# & .NET Uzmanı | Yazılım Geliştirici</title>
-  <meta name="description" content="C# ve .NET teknolojilerinde 3+ yıl deneyimli yazılım geliştirici. ASP.NET MVC, WPF, Android ve veritabanı optimizasyonu." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ersin Bulut — C# & .NET Developer | 3D Portfolio</title>
+    <meta name="description" content="C# ve .NET teknolojilerinde 3+ yıl deneyimli yazılım geliştirici. ASP.NET MVC, WPF, Android ve veritabanı optimizasyonu.">
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <!-- Google Fonts: Inter + Space Grotesk -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ========== NAVBAR ========== -->
-  <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-    <div class="container">
+    <!-- Custom Cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
-      <!-- Logo -->
-      <a class="navbar-brand" href="#hero">
-        <span class="brand-bracket">{</span><span class="brand-name">dev</span><span class="brand-dot">.</span><span class="brand-bracket">}</span>
-      </a>
-
-      <!-- Dark Mode Toggle -->
-      <div class="d-flex align-items-center order-lg-last ms-lg-3 gap-2">
-        <button class="theme-toggle" id="themeToggle" aria-label="Temayı değiştir">
-          <i class="bi bi-sun-fill" id="themeIcon"></i>
-        </button>
-      </div>
-
-      <!-- Hamburger -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-        aria-controls="navMenu" aria-expanded="false" aria-label="Menüyü aç/kapat">
-        <span class="toggler-bar"></span>
-        <span class="toggler-bar"></span>
-        <span class="toggler-bar"></span>
-      </button>
-
-      <!-- Nav Links -->
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto gap-lg-1">
-          <li class="nav-item"><a class="nav-link" href="#projects">Projeler</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">Hakkımda</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">İletişim</a></li>
-          <li class="nav-item">
-            <a class="nav-link nav-link-library" href="kutuphane.html">
-              <i class="bi bi-book-half me-1"></i>Kütüphanem
-            </a>
-          </li>
-        </ul>
-      </div>
-
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-inner">
+            <div class="loader-cube">
+                <div class="cube-face front"></div>
+                <div class="cube-face back"></div>
+                <div class="cube-face right"></div>
+                <div class="cube-face left"></div>
+                <div class="cube-face top"></div>
+                <div class="cube-face bottom"></div>
+            </div>
+            <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+            <p class="loader-name">ERSIN BULUT</p>
+            <p class="loader-sub">Portfolio Yükleniyor...</p>
+        </div>
     </div>
-  </nav>
-  <!-- /NAVBAR -->
 
+    <!-- 3D Canvas (fixed background) -->
+    <canvas id="bg-canvas"></canvas>
 
-  <!-- ========== HERO ========== -->
-  <section id="hero" class="hero-section d-flex align-items-center">
-    <!-- Animated grid bg -->
-    <div class="hero-grid" aria-hidden="true"></div>
-    <!-- Glow orbs -->
-    <div class="hero-orb orb-1" aria-hidden="true"></div>
-    <div class="hero-orb orb-2" aria-hidden="true"></div>
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
 
-    <div class="container position-relative z-1">
-      <div class="row align-items-center">
-        <div class="col-lg-8">
-
-          <!-- Badge -->
-          <div class="hero-label mb-4">
-            <span class="badge-label">
-              <i class="bi bi-circle-fill pulse-dot"></i>
-              İşbirliğine Açık
-            </span>
-          </div>
-
-          <!-- Title -->
-          <h1 class="hero-title">
-            Kod yazıyorum,<br />
-            <span class="hero-accent">deneyim</span> tasarlıyorum.
-          </h1>
-
-          <!-- Description -->
-          <p class="hero-desc">
-            C# ve .NET teknolojileri alanında 3+ yıl deneyimli yazılım geliştirici.
-            ASP.NET MVC, WPF masaüstü uygulamaları ve Android mobil uygulamalar geliştiriyorum.
-            Temiz kod, güçlü mimari ve veritabanı optimizasyonu odaklı çalışıyorum.
-          </p>
-
-          <!-- CTA -->
-          <div class="hero-cta d-flex flex-wrap gap-3">
-            <a href="#projects" class="btn btn-primary-custom">
-              Projelerimi Gör
-              <i class="bi bi-arrow-down-right ms-2"></i>
+    <!-- ════════ NAVBAR ════════ -->
+    <nav id="navbar">
+        <div class="nav-wrapper">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>ersin<span class="logo-dot">.</span>dev<span class="logo-bracket">/&gt;</span>
             </a>
-            <a href="kutuphane.html" class="btn btn-library-custom">
-              <i class="bi bi-book-half me-2"></i>
-              Kütüphanem
-            </a>
-            <a href="#contact" class="btn btn-outline-custom">
-              İletişime Geç
-            </a>
-          </div>
-
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero"     class="nav-link">Giriş</a></li>
+                <li><a href="#skills"   class="nav-link">Yetenekler</a></li>
+                <li><a href="#projects" class="nav-link">Projeler</a></li>
+                <li><a href="#about"    class="nav-link">Hakkımda</a></li>
+                <li><a href="#contact"  class="nav-link nav-cta">İletişim</a></li>
+            </ul>
+            <button class="nav-hamburger" id="hamburger" aria-label="Menüyü aç">
+                <span></span><span></span><span></span>
+            </button>
         </div>
+    </nav>
 
-        <!-- Right deco card -->
-        <div class="col-lg-4 d-none d-lg-flex justify-content-end">
-          <div class="hero-deco-card">
-            <div class="deco-line"></div>
-            <div class="deco-stat">
-              <span class="deco-number">8+</span>
-              <span class="deco-label">Kurumsal Proje</span>
-            </div>
-            <div class="deco-divider"></div>
-            <div class="deco-stat">
-              <span class="deco-number">10k+</span>
-              <span class="deco-label">GitHub Commit</span>
-            </div>
-            <div class="deco-divider"></div>
-            <div class="deco-stat">
-              <span class="deco-number">+3</span>
-              <span class="deco-label">Yıl Deneyim</span>
-            </div>
-          </div>
-        </div>
+    <main>
 
-      </div>
-    </div>
-  </section>
-  <!-- /HERO -->
-
-
-  <!-- ========== PROJELER ========== -->
-  <section id="projects" class="projects-section">
-    <div class="container">
-
-      <div class="section-header">
-        <span class="section-tag">// seçili çalışmalar</span>
-        <h2 class="section-title">Projeler</h2>
-        <p class="section-desc">Üzerinde çalıştığım açık kaynak ve kişisel projelerden bir seçki.</p>
-      </div>
-
-      <!-- Filter -->
-      <div class="filter-bar d-flex flex-wrap gap-2 mb-5" role="group" aria-label="Proje filtrele">
-        <button class="filter-btn active" data-filter="all">Tümü</button>
-        <button class="filter-btn" data-filter="web">Web</button>
-        <button class="filter-btn" data-filter="masaüstü">Masaüstü</button>
-        <button class="filter-btn" data-filter="ai">AI / ML</button>
-      </div>
-
-      <!-- Project Cards -->
-      <div class="row g-4" id="projectGrid">
-
-        <!-- Proje 1: FlightBooking -->
-        <div class="col-md-6 col-xl-4 project-item" data-category="ai">
-          <div class="project-card">
-            <div class="card-img-wrap">
-              <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80"
-                   alt="FlightBooking — AI Destekli Uçak Bileti Rezervasyon Sistemi" loading="lazy" />
-              <div class="card-img-overlay">
-                <span class="tech-badge">AI/ML</span>
-                <span class="tech-badge">Booking System</span>
-                <span class="tech-badge">API</span>
-              </div>
-            </div>
-            <div class="card-body-custom">
-              <h3 class="project-name">FlightBooking</h3>
-              <p class="project-desc">AI destekli uçak bileti rezervasyon sistemi. Kullanıcı tercihlerine göre en uygun uçuşları öneren akıllı booking platformu.</p>
-              <div class="card-actions">
-                <a href="https://github.com/ersinbulut/FlightBooking" target="_blank" rel="noopener" class="btn-card btn-github">
-                  <i class="bi bi-github"></i> GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Proje 2: DatabaseMastery -->
-        <div class="col-md-6 col-xl-4 project-item" data-category="web">
-          <div class="project-card">
-            <div class="card-img-wrap">
-              <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80"
-                   alt="DatabaseMastery — Veritabanı Yönetim Sistemleri" loading="lazy" />
-              <div class="card-img-overlay">
-                <span class="tech-badge">ASP.NET Core</span>
-                <span class="tech-badge">MongoDB</span>
-                <span class="tech-badge">PostgreSQL</span>
-                <span class="tech-badge">MSSQL</span>
-              </div>
-            </div>
-            <div class="card-body-custom">
-              <h3 class="project-name">DatabaseMastery</h3>
-              <p class="project-desc">Farklı veritabanı sistemleri ile geliştirilmiş projeler koleksiyonu. ASP.NET Core + MongoDB, PostgreSQL ve MSSQL örnekleri.</p>
-              <div class="card-actions">
-                <a href="https://github.com/ersinbulut/DatabaseMastery" target="_blank" rel="noopener" class="btn-card btn-github">
-                  <i class="bi bi-github"></i> GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Proje 3: DevEMagiclineDesktop -->
-        <div class="col-md-6 col-xl-4 project-item" data-category="masaüstü">
-          <div class="project-card">
-            <div class="card-img-wrap">
-              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-                   alt="DevEMagiclineDesktop — Araç Takip Programı" loading="lazy" />
-              <div class="card-img-overlay">
-                <span class="tech-badge">DevExpress</span>
-                <span class="tech-badge">Desktop</span>
-                <span class="tech-badge">REST API</span>
-                <span class="tech-badge">Turkcell Koopilot</span>
-              </div>
-            </div>
-            <div class="card-body-custom">
-              <h3 class="project-name">DevEMagiclineDesktop</h3>
-              <p class="project-desc">DevExpress ile geliştirilmiş masaüstü araç takip programı. Turkcell Koopilot filom entegrasyonu ile REST API desteği.</p>
-              <div class="card-actions">
-                <a href="https://github.com/ersinbulut/Projegorselleri" target="_blank" rel="noopener" class="btn-card btn-github">
-                  <i class="bi bi-github"></i> GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Proje 4: MovieApi -->
-        <div class="col-md-6 col-xl-4 project-item" data-category="web">
-          <div class="project-card">
-            <div class="card-img-wrap">
-              <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=800&q=80"
-                   alt="MovieApi — YouTube API Destekli Film Yönetim Sistemi" loading="lazy" />
-              <div class="card-img-overlay">
-                <span class="tech-badge">YouTube API</span>
-                <span class="tech-badge">Web</span>
-                <span class="tech-badge">Movie Database</span>
-                <span class="tech-badge">API Integration</span>
-              </div>
-            </div>
-            <div class="card-body-custom">
-              <h3 class="project-name">MovieApi</h3>
-              <p class="project-desc">YouTube API destekli web tabanlı film ve dizi yönetim sistemi. Video incelemeleri ve fragmanlar ile zengin içerik.</p>
-              <div class="card-actions">
-                <a href="https://github.com/ersinbulut/MovieApi" target="_blank" rel="noopener" class="btn-card btn-github">
-                  <i class="bi bi-github"></i> GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Proje 5: ApiProjeKampi -->
-        <div class="col-md-6 col-xl-4 project-item" data-category="web">
-          <div class="project-card">
-            <div class="card-img-wrap">
-              <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=80"
-                   alt="ApiProjeKampi — Yemek Tarifi Yönetim Sistemi" loading="lazy" />
-              <div class="card-img-overlay">
-                <span class="tech-badge">Web</span>
-                <span class="tech-badge">Recipe Management</span>
-                <span class="tech-badge">Full-Stack</span>
-              </div>
-            </div>
-            <div class="card-body-custom">
-              <h3 class="project-name">ApiProjeKampi</h3>
-              <p class="project-desc">Web tabanlı yemek tarifi yönetim sistemi. Kullanıcılar tarif ekleyebilir, kategorize edebilir ve paylaşabilir.</p>
-              <div class="card-actions">
-                <a href="https://github.com/ersinbulut/ApiProjeKampi" target="_blank" rel="noopener" class="btn-card btn-github">
-                  <i class="bi bi-github"></i> GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Proje 6: MvcKutuphane -->
-        <div class="col-md-6 col-xl-4 project-item" data-category="web">
-          <div class="project-card">
-            <div class="card-img-wrap">
-              <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=800&q=80"
-                   alt="MvcKutuphane — Kütüphane Yönetim Sistemi" loading="lazy" />
-              <div class="card-img-overlay">
-                <span class="tech-badge">ASP.NET MVC5</span>
-                <span class="tech-badge">Library System</span>
-                <span class="tech-badge">3 Panel</span>
-              </div>
-            </div>
-            <div class="card-body-custom">
-              <h3 class="project-name">MvcKutuphane</h3>
-              <p class="project-desc">MVC5 ile geliştirilmiş 3 panelli kütüphane yönetim sistemi. Murat Yücedağ hocanın kursu kapsamında tamamlanan proje.</p>
-              <div class="card-actions">
-                <a href="https://github.com/ersinbulut/MvcKutuphane" target="_blank" rel="noopener" class="btn-card btn-github">
-                  <i class="bi bi-github"></i> GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <!-- /Project Cards -->
-
-    </div>
-  </section>
-  <!-- /PROJELER -->
-
-
-  <!-- ========== HAKKIMDA ========== -->
-  <section id="about" class="about-section">
-    <div class="container">
-      <div class="row align-items-center g-5">
-
-        <!-- Left: Image -->
-        <div class="col-lg-5">
-          <div class="about-img-wrap">
-            <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=800&q=80"
-                 alt="Geliştirme ortamı" class="about-img" />
-            <div class="about-img-badge">
-              <i class="bi bi-code-slash"></i>
-              <span>C# & .NET Uzmanı</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Text -->
-        <div class="col-lg-7">
-          <span class="section-tag">// ben kimim</span>
-          <h2 class="section-title mt-2">Hakkımda</h2>
-          <p class="about-text">
-            Merhaba! Ben Ersin Bulut, C# ve .NET teknolojileri konusunda 3+ yıl deneyimli yazılım geliştirici.
-            ASP.NET MVC mimarisi ile web uygulamaları, WPF ile masaüstü uygulamaları ve Android mobil uygulamalar
-            geliştiriyorum. Hem front-end hem back-end geliştirme alanlarında deneyime sahibim.
-          </p>
-          <p class="about-text">
-            Magicline Enerji'de Yazılım Proje Yöneticisi olarak elektrikli araç şarj istasyonu yönetim platformu
-            üzerinde çalışıyorum. SQL Server, PostgreSQL ve MongoDB gibi veritabanı sistemleri ile REST API
-            entegrasyonları konusunda uzmanlığa sahibim.
-          </p>
-
-          <!-- Tech stack -->
-          <div class="tech-stack d-flex flex-wrap gap-2 mt-4">
-            <span class="stack-tag">C#</span>
-            <span class="stack-tag">.NET Core</span>
-            <span class="stack-tag">ASP.NET MVC</span>
-            <span class="stack-tag">WPF</span>
-            <span class="stack-tag">SQL Server</span>
-            <span class="stack-tag">PostgreSQL</span>
-            <span class="stack-tag">MongoDB</span>
-            <span class="stack-tag">Entity Framework</span>
-            <span class="stack-tag">REST API</span>
-            <span class="stack-tag">Android</span>
-            <span class="stack-tag">Git</span>
-            <span class="stack-tag">DevExpress</span>
-          </div>
-
-          <div class="d-flex gap-3 mt-4 flex-wrap">
-            <a href="#contact" class="btn btn-primary-custom">
-              Seninle Çalışalım
-              <i class="bi bi-arrow-right ms-2"></i>
-            </a>
-            <a href="kutuphane.html" class="btn btn-library-custom">
-              <i class="bi bi-book-half me-2"></i>
-              Kitaplığım
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-  <!-- /HAKKIMDA -->
-
-
-  <!-- ========== İLETİŞİM ========== -->
-  <section id="contact" class="contact-section">
-    <div class="container">
-      <div class="contact-inner">
-
-        <div class="text-center mb-5">
-          <span class="section-tag">// iletişim</span>
-          <h2 class="section-title mt-2">Bir Proje mi Var?</h2>
-          <p class="section-desc mx-auto">Fikirlerinizi gerçeğe dönüştürmek için buradayım. Hadi konuşalım.</p>
-        </div>
-
-        <div class="row justify-content-center">
-          <div class="col-lg-7">
-            <form class="contact-form" id="contactForm" novalidate>
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <div class="form-group-custom">
-                    <label for="name">Ad Soyad</label>
-                    <input type="text" id="name" class="form-input" placeholder="Adınız" required />
-                  </div>
+        <!-- ════════ HERO ════════ -->
+        <section id="hero">
+            <div class="hero-container">
+                <div class="hero-left">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span>
+                        İşbirliğine Açık
+                    </div>
+                    <h1 class="hero-h1">
+                        <span class="line">Kod Yazıyorum,</span>
+                        <span class="line accent-text">Geleceği</span>
+                        <span class="line">Tasarlıyorum.</span>
+                    </h1>
+                    <p class="hero-p">
+                        C# ve .NET teknolojilerinde <strong>3+ yıl</strong> deneyimli yazılım geliştirici.
+                        ASP.NET MVC, WPF masaüstü ve Android mobil uygulamalar geliştiriyorum.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn-glow magnetic">Projeleri Gör <i class="bi bi-arrow-right-circle"></i></a>
+                        <a href="#contact"  class="btn-ghost magnetic">İletişim <i class="bi bi-send"></i></a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-num" data-count="3">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Yıl Deneyim</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-num" data-count="8">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Kurumsal Proje</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-num" data-count="10">0</span><span class="stat-plus">k+</span>
+                            <span class="stat-label">GitHub Commit</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group-custom">
-                    <label for="email">E-posta</label>
-                    <input type="email" id="email" class="form-input" placeholder="ornek@mail.com" required />
-                  </div>
+                <div class="hero-right">
+                    <div class="hero-3d-card tilt-card">
+                        <div class="card-inner">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                                <span class="card-filename">developer.cs</span>
+                            </div>
+                            <div class="card-code">
+                                <div class="code-line"><span class="c-purple">var</span> <span class="c-blue">developer</span> = <span class="c-green">new</span> <span class="c-yellow">Developer</span>();</div>
+                                <div class="code-line"><span class="c-blue">developer</span>.<span class="c-cyan">Name</span> = <span class="c-orange">"Ersin Bulut"</span>;</div>
+                                <div class="code-line"><span class="c-blue">developer</span>.<span class="c-cyan">Stack</span> = <span class="c-orange">"C# / .NET"</span>;</div>
+                                <div class="code-line"><span class="c-blue">developer</span>.<span class="c-cyan">Experience</span> = <span class="c-green">3</span>;</div>
+                                <div class="code-line">&nbsp;</div>
+                                <div class="code-line"><span class="c-purple">await</span> <span class="c-blue">developer</span>.<span class="c-cyan">BuildAmazing</span>();</div>
+                                <div class="code-line c-muted">// ✓ Ready to collaborate!</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-12">
-                  <div class="form-group-custom">
-                    <label for="subject">Konu</label>
-                    <input type="text" id="subject" class="form-input" placeholder="Proje fikrim var..." />
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group-custom">
-                    <label for="message">Mesaj</label>
-                    <textarea id="message" class="form-input" rows="5" placeholder="Merhaba, seninle..." required></textarea>
-                  </div>
-                </div>
-                <div class="col-12 text-center">
-                  <button type="submit" class="btn btn-primary-custom w-100" id="submitBtn">
-                    Gönder
-                    <i class="bi bi-send ms-2"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-            <div id="formSuccess" class="form-success d-none">
-              <i class="bi bi-check-circle-fill"></i>
-              Mesajın alındı! En kısa sürede dönüş yapacağım.
             </div>
-          </div>
+            <div class="scroll-hint">
+                <div class="scroll-wheel"></div>
+                <span>Aşağı kaydır</span>
+            </div>
+        </section>
+
+        <!-- ════════ SKILLS ════════ -->
+        <section id="skills">
+            <div class="section-container">
+                <div class="section-label reveal">// Teknolojiler</div>
+                <h2 class="section-h2 reveal">Teknoloji Yığını</h2>
+                <p class="section-p reveal">Üzerinde çalıştığım dil, framework ve araçlar.</p>
+
+                <div class="skills-grid">
+                    <div class="skill-card tilt-card reveal" style="--delay:0.05s">
+                        <div class="skill-icon"><i class="bi bi-braces"></i></div>
+                        <h3>Backend</h3>
+                        <div class="skill-tags">
+                            <span>C#</span><span>.NET Core</span><span>ASP.NET MVC</span><span>Entity Framework</span><span>REST API</span>
+                        </div>
+                    </div>
+                    <div class="skill-card tilt-card reveal" style="--delay:0.15s">
+                        <div class="skill-icon"><i class="bi bi-database"></i></div>
+                        <h3>Veritabanı</h3>
+                        <div class="skill-tags">
+                            <span>SQL Server</span><span>PostgreSQL</span><span>MongoDB</span><span>Redis</span>
+                        </div>
+                    </div>
+                    <div class="skill-card tilt-card reveal" style="--delay:0.25s">
+                        <div class="skill-icon"><i class="bi bi-window-desktop"></i></div>
+                        <h3>Masaüstü & Mobil</h3>
+                        <div class="skill-tags">
+                            <span>WPF</span><span>Android</span><span>DevExpress</span><span>WinForms</span>
+                        </div>
+                    </div>
+                    <div class="skill-card tilt-card reveal" style="--delay:0.35s">
+                        <div class="skill-icon"><i class="bi bi-tools"></i></div>
+                        <h3>DevOps & Araçlar</h3>
+                        <div class="skill-tags">
+                            <span>Git</span><span>Docker</span><span>CI/CD</span><span>Azure</span><span>Swagger</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════ PROJECTS ════════ -->
+        <section id="projects">
+            <div class="section-container">
+                <div class="section-label reveal">// Seçili Çalışmalar</div>
+                <h2 class="section-h2 reveal">Projeler</h2>
+                <p class="section-p reveal">Üzerinde çalıştığım açık kaynak ve kişisel projelerden seçkiler.</p>
+
+                <div class="filter-bar reveal">
+                    <button class="filter-btn active" data-filter="all">Tümü</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="desktop">Masaüstü</button>
+                    <button class="filter-btn" data-filter="ai">AI / ML</button>
+                </div>
+
+                <div class="projects-grid" id="projectsGrid">
+
+                    <div class="project-card tilt-card reveal" data-cat="ai" style="--delay:0.05s">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" alt="FlightBooking" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/ersinbulut/FlightBooking" target="_blank" rel="noopener" class="overlay-btn"><i class="bi bi-github"></i></a>
+                            </div>
+                            <div class="project-tags">
+                                <span>AI/ML</span><span>Booking</span><span>API</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3>FlightBooking</h3>
+                            <p>AI destekli uçak bileti rezervasyon sistemi. Kullanıcı tercihlerine göre en uygun uçuşları öneren akıllı platform.</p>
+                            <a href="https://github.com/ersinbulut/FlightBooking" target="_blank" rel="noopener" class="project-link">
+                                GitHub'da Gör <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card tilt-card reveal" data-cat="web" style="--delay:0.15s">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80" alt="DatabaseMastery" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/ersinbulut/DatabaseMastery" target="_blank" rel="noopener" class="overlay-btn"><i class="bi bi-github"></i></a>
+                            </div>
+                            <div class="project-tags">
+                                <span>ASP.NET</span><span>MongoDB</span><span>PostgreSQL</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3>DatabaseMastery</h3>
+                            <p>Farklı veritabanı sistemleri ile geliştirilmiş projeler koleksiyonu. ASP.NET Core + MongoDB, PostgreSQL ve MSSQL örnekleri.</p>
+                            <a href="https://github.com/ersinbulut/DatabaseMastery" target="_blank" rel="noopener" class="project-link">
+                                GitHub'da Gör <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card tilt-card reveal" data-cat="desktop" style="--delay:0.25s">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="DevEMagicline" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/ersinbulut/Projegorselleri" target="_blank" rel="noopener" class="overlay-btn"><i class="bi bi-github"></i></a>
+                            </div>
+                            <div class="project-tags">
+                                <span>WPF</span><span>DevExpress</span><span>REST API</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3>DevEMagicline Desktop</h3>
+                            <p>DevExpress ile geliştirilmiş masaüstü araç takip programı. Turkcell Koopilot filo entegrasyonu ile REST API desteği.</p>
+                            <a href="https://github.com/ersinbulut/Projegorselleri" target="_blank" rel="noopener" class="project-link">
+                                GitHub'da Gör <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card tilt-card reveal" data-cat="web" style="--delay:0.35s">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&q=80" alt="MovieApi" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/ersinbulut/MovieApi" target="_blank" rel="noopener" class="overlay-btn"><i class="bi bi-github"></i></a>
+                            </div>
+                            <div class="project-tags">
+                                <span>YouTube API</span><span>Web</span><span>Full-Stack</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3>MovieApi</h3>
+                            <p>YouTube API destekli web tabanlı film ve dizi yönetim sistemi. Video incelemeleri ve fragmanlar ile zengin içerik.</p>
+                            <a href="https://github.com/ersinbulut/MovieApi" target="_blank" rel="noopener" class="project-link">
+                                GitHub'da Gör <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card tilt-card reveal" data-cat="web" style="--delay:0.45s">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=600&q=80" alt="ApiProjeKampi" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/ersinbulut/ApiProjeKampi" target="_blank" rel="noopener" class="overlay-btn"><i class="bi bi-github"></i></a>
+                            </div>
+                            <div class="project-tags">
+                                <span>Web</span><span>Recipe</span><span>Full-Stack</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3>ApiProjeKampi</h3>
+                            <p>Web tabanlı yemek tarifi yönetim sistemi. Kullanıcılar tarif ekleyebilir, kategorize edebilir ve paylaşabilir.</p>
+                            <a href="https://github.com/ersinbulut/ApiProjeKampi" target="_blank" rel="noopener" class="project-link">
+                                GitHub'da Gör <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card tilt-card reveal" data-cat="web" style="--delay:0.55s">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80" alt="MvcKutuphane" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/ersinbulut/MvcKutuphane" target="_blank" rel="noopener" class="overlay-btn"><i class="bi bi-github"></i></a>
+                            </div>
+                            <div class="project-tags">
+                                <span>ASP.NET MVC5</span><span>3 Panel</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3>MvcKutuphane</h3>
+                            <p>MVC5 ile geliştirilmiş 3 panelli kütüphane yönetim sistemi. Admin, kullanıcı ve üye paneli ile tam kapsamlı.</p>
+                            <a href="https://github.com/ersinbulut/MvcKutuphane" target="_blank" rel="noopener" class="project-link">
+                                GitHub'da Gör <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════ ABOUT ════════ -->
+        <section id="about">
+            <div class="section-container">
+                <div class="about-grid">
+                    <div class="about-left">
+                        <div class="section-label reveal">// Ben Kimim</div>
+                        <h2 class="section-h2 reveal">Hakkımda</h2>
+                        <p class="about-text reveal">
+                            Merhaba! Ben <strong>Ersin Bulut</strong>, C# ve .NET teknolojileri konusunda 3+ yıl
+                            deneyimli yazılım geliştirici. ASP.NET MVC ile web uygulamaları, WPF ile masaüstü
+                            uygulamaları ve Android mobil uygulamalar geliştiriyorum.
+                        </p>
+                        <p class="about-text reveal">
+                            <strong>Magicline Enerji</strong>'de Yazılım Proje Yöneticisi olarak elektrikli araç
+                            şarj istasyonu yönetim platformu üzerinde çalışıyorum. SQL Server, PostgreSQL ve MongoDB
+                            ile REST API entegrasyonları konusunda uzmanlığa sahibim.
+                        </p>
+                        <div class="about-actions reveal">
+                            <a href="https://github.com/ersinbulut" target="_blank" rel="noopener" class="btn-glow magnetic">
+                                <i class="bi bi-github"></i> GitHub
+                            </a>
+                            <a href="https://linkedin.com/in/ersin-bulut-2a45371a7" target="_blank" rel="noopener" class="btn-ghost magnetic">
+                                <i class="bi bi-linkedin"></i> LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                    <div class="about-right reveal">
+                        <div class="about-card tilt-card">
+                            <div class="card-header">
+                                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                                <span class="card-filename">ersin_bulut.json</span>
+                            </div>
+                            <div class="about-code">
+<pre><code><span class="c-muted">{</span>
+  <span class="c-cyan">"name"</span>: <span class="c-orange">"Ersin Bulut"</span>,
+  <span class="c-cyan">"title"</span>: <span class="c-orange">"Software Developer"</span>,
+  <span class="c-cyan">"company"</span>: <span class="c-orange">"Magicline Enerji"</span>,
+  <span class="c-cyan">"location"</span>: <span class="c-orange">"Türkiye 🇹🇷"</span>,
+  <span class="c-cyan">"experience"</span>: <span class="c-green">3</span>,
+  <span class="c-cyan">"projects"</span>: <span class="c-green">8</span>,
+  <span class="c-cyan">"available"</span>: <span class="c-purple">true</span>,
+  <span class="c-cyan">"stack"</span>: [
+    <span class="c-orange">"C#"</span>, <span class="c-orange">".NET"</span>,
+    <span class="c-orange">"SQL"</span>, <span class="c-orange">"WPF"</span>
+  ]
+<span class="c-muted">}</span></code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════ CONTACT ════════ -->
+        <section id="contact">
+            <div class="section-container">
+                <div class="section-label reveal">// İletişim</div>
+                <h2 class="section-h2 reveal">Bir Proje mi Var?</h2>
+                <p class="section-p reveal">Fikirlerinizi gerçeğe dönüştürmek için buradayım. Hadi konuşalım.</p>
+
+                <div class="contact-grid">
+                    <div class="contact-info reveal">
+                        <a href="mailto:ersinbulut@magiclinesarj.com" class="contact-item">
+                            <div class="contact-icon"><i class="bi bi-envelope"></i></div>
+                            <div>
+                                <span class="contact-label">E-posta</span>
+                                <span class="contact-val">ersinbulut@magiclinesarj.com</span>
+                            </div>
+                        </a>
+                        <a href="https://github.com/ersinbulut" target="_blank" rel="noopener" class="contact-item">
+                            <div class="contact-icon"><i class="bi bi-github"></i></div>
+                            <div>
+                                <span class="contact-label">GitHub</span>
+                                <span class="contact-val">github.com/ersinbulut</span>
+                            </div>
+                        </a>
+                        <a href="https://linkedin.com/in/ersin-bulut-2a45371a7" target="_blank" rel="noopener" class="contact-item">
+                            <div class="contact-icon"><i class="bi bi-linkedin"></i></div>
+                            <div>
+                                <span class="contact-label">LinkedIn</span>
+                                <span class="contact-val">Ersin Bulut</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <form class="contact-form reveal" id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cf-name">Ad Soyad</label>
+                                <input type="text" id="cf-name" placeholder="Adınız" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cf-email">E-posta</label>
+                                <input type="email" id="cf-email" placeholder="ornek@mail.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-subject">Konu</label>
+                            <input type="text" id="cf-subject" placeholder="Proje fikrim var...">
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-message">Mesaj</label>
+                            <textarea id="cf-message" rows="5" placeholder="Merhaba, seninle..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-glow w-full magnetic">
+                            Gönder <i class="bi bi-send"></i>
+                        </button>
+                        <div id="form-success" class="form-success hidden">
+                            <i class="bi bi-check-circle-fill"></i>
+                            Mesajın alındı! En kısa sürede dönüş yapacağım.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-inner">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>ersin<span class="logo-dot">.</span>dev<span class="logo-bracket">/&gt;</span>
+            </a>
+            <p class="footer-copy">&copy; <span id="footerYear"></span> Ersin Bulut. Tüm hakları saklıdır.</p>
+            <div class="footer-socials">
+                <a href="https://github.com/ersinbulut" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                <a href="https://linkedin.com/in/ersin-bulut-2a45371a7" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                <a href="mailto:ersinbulut@magiclinesarj.com" aria-label="Email"><i class="bi bi-envelope"></i></a>
+                <a href="kutuphane.html" aria-label="Kütüphane"><i class="bi bi-book-half"></i></a>
+            </div>
         </div>
+    </footer>
 
-      </div>
-    </div>
-  </section>
-  <!-- /İLETİŞİM -->
+    <!-- Back to Top -->
+    <button id="backToTop" aria-label="Yukarı çık"><i class="bi bi-arrow-up"></i></button>
 
-
-  <!-- ========== FOOTER ========== -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
-
-        <a class="navbar-brand" href="#hero">
-          <span class="brand-bracket">{</span><span class="brand-name">dev</span><span class="brand-dot">.</span><span class="brand-bracket">}</span>
-        </a>
-
-        <p class="footer-copy mb-0">
-          &copy; <span id="footerYear"></span> Ersin Bulut. Tüm hakları saklıdır.
-        </p>
-
-        <div class="social-links d-flex gap-3">
-          <a href="https://github.com/ersinbulut" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
-            <i class="bi bi-github"></i>
-          </a>
-          <a href="https://linkedin.com/in/ersin-bulut-2a45371a7" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-            <i class="bi bi-linkedin"></i>
-          </a>
-          <a href="kutuphane.html" class="social-link" aria-label="Kütüphane">
-            <i class="bi bi-book-half"></i>
-          </a>
-          <a href="mailto:ersinbulut@magiclinesarj.com" class="social-link" aria-label="E-posta">
-            <i class="bi bi-envelope"></i>
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </footer>
-  <!-- /FOOTER -->
-
-
-  <!-- Back to top -->
-  <button class="back-to-top" id="backToTop" aria-label="Sayfanın başına dön">
-    <i class="bi bi-arrow-up"></i>
-  </button>
-
-
-  <!-- Bootstrap 5 JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Custom JS -->
-  <script src="script.js"></script>
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,416 @@
+/* ═══════════════════════════════════════
+   Kütüphane Sayfası — Stil Eklentileri
+   (style.css ile birlikte kullanılır)
+═══════════════════════════════════════ */
+
+/* ── Lib Hero ── */
+.lib-hero {
+  min-height: 70vh;
+  padding: 140px 0 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.lib-hero-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.lib-hero-deco-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+.lib-deco-card {
+  background: rgba(10, 5, 32, 0.55);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  min-width: 260px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  animation: floatY 7s ease-in-out infinite;
+}
+.lib-deco-icon {
+  font-size: 2rem;
+  color: var(--secondary);
+  margin-bottom: 1.25rem;
+  display: inline-block;
+}
+.lib-deco-stat {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  position: relative;
+  z-index: 1;
+}
+.lib-deco-num {
+  font-family: var(--font-h);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.lib-deco-label {
+  font-size: .75rem;
+  color: var(--text-muted);
+  font-family: var(--font-c);
+  letter-spacing: .05em;
+}
+.lib-deco-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 1.25rem 0;
+}
+
+/* ── Books Section ── */
+.lib-books-section {
+  padding: 60px 0 100px;
+  position: relative;
+}
+.lib-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.cat-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+/* ── Search ── */
+.lib-search-wrap {
+  position: relative;
+  max-width: 420px;
+  margin-bottom: 2.5rem;
+}
+.lib-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.lib-search {
+  width: 100%;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--border);
+  color: #fff;
+  padding: .8rem 1rem .8rem 2.6rem;
+  border-radius: 12px;
+  font-family: var(--font-b);
+  font-size: .92rem;
+  outline: none;
+  transition: var(--t);
+}
+.lib-search::placeholder { color: var(--text-muted); }
+.lib-search:focus {
+  border-color: var(--border-hi);
+  background: rgba(255, 255, 255, .06);
+  box-shadow: 0 0 0 3px rgba(124,111,247,.12);
+}
+
+/* ── Book Card ── */
+.book-card {
+  background: rgba(10, 5, 32, 0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: var(--t);
+  height: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.book-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.book-card:hover {
+  border-color: var(--border-hi);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0,0,0,.4);
+}
+.book-cover-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+.book-cover-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+.book-card:hover .book-cover-wrap img { transform: scale(1.06); }
+
+.book-genre-badge {
+  position: absolute;
+  top: .65rem;
+  left: .65rem;
+  font-size: .65rem;
+  font-weight: 700;
+  font-family: var(--font-c);
+  padding: .25rem .65rem;
+  background: rgba(124,111,247,.85);
+  color: #fff;
+  border-radius: 4px;
+  letter-spacing: .04em;
+}
+.book-rating {
+  position: absolute;
+  top: .65rem;
+  right: .65rem;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: .25rem .55rem;
+  background: rgba(0, 0, 0, .65);
+  backdrop-filter: blur(8px);
+  color: #ffcb6b;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+.book-body {
+  padding: 1rem 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.book-title {
+  font-family: var(--font-h);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: .25rem;
+  line-height: 1.3;
+}
+.book-author {
+  font-size: .8rem;
+  color: var(--primary);
+  font-family: var(--font-c);
+  margin-bottom: .65rem;
+}
+.book-desc {
+  font-size: .82rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.book-footer {
+  padding: .75rem 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  font-size: .72rem;
+}
+.book-date {
+  color: var(--text-muted);
+  font-family: var(--font-c);
+}
+.book-status {
+  font-size: .68rem;
+  font-weight: 700;
+  font-family: var(--font-c);
+  padding: .2rem .55rem;
+  border-radius: 4px;
+  letter-spacing: .03em;
+}
+.status-read {
+  background: rgba(34,197,94,.15);
+  color: #4ade80;
+  border: 1px solid rgba(34,197,94,.3);
+}
+.status-reading {
+  background: rgba(251,191,36,.15);
+  color: #fbbf24;
+  border: 1px solid rgba(251,191,36,.3);
+}
+.delete-book-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: .9rem;
+  padding: .2rem .35rem;
+  border-radius: 4px;
+  transition: var(--t);
+}
+.delete-book-btn:hover {
+  color: #f87171;
+  background: rgba(248,113,113,.1);
+}
+
+/* ── Empty State ── */
+.lib-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-dim);
+}
+.lib-empty i {
+  font-size: 3.5rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  display: block;
+}
+.lib-empty h3 {
+  font-family: var(--font-h);
+  color: #fff;
+  margin-bottom: .5rem;
+}
+.lib-empty p {
+  color: var(--text-muted);
+  font-size: .9rem;
+}
+
+/* ── Modal ── */
+.modal-content.lib-modal {
+  background: linear-gradient(180deg, var(--dark-3), var(--dark-2));
+  border: 1px solid var(--border-hi);
+  border-radius: 18px;
+  padding: 2rem;
+  color: var(--text);
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+}
+.lib-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.lib-modal-title {
+  font-family: var(--font-h);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+}
+.lib-modal-title i { color: var(--primary); }
+.lib-modal-close {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--t);
+}
+.lib-modal-close:hover {
+  background: rgba(248,113,113,.15);
+  border-color: rgba(248,113,113,.3);
+  color: #f87171;
+}
+.lib-modal-warn {
+  font-size: 2.5rem;
+  color: #f87171;
+  margin-bottom: 1rem;
+  display: block;
+}
+.lib-modal-desc {
+  color: var(--text-dim);
+  font-size: .9rem;
+  margin-bottom: 0;
+}
+
+/* Form fields inside modal use .form-group already styled in style.css,
+   but Bootstrap modal can't use the global selector easily so we re-define */
+.lib-modal .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+.lib-modal .form-group label {
+  font-family: var(--font-h);
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+.lib-modal .form-group input,
+.lib-modal .form-group select,
+.lib-modal .form-group textarea {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  color: #fff;
+  padding: .7rem 1rem;
+  border-radius: 10px;
+  font-family: var(--font-b);
+  font-size: .9rem;
+  outline: none;
+  transition: var(--t);
+  resize: vertical;
+}
+.lib-modal .form-group input:focus,
+.lib-modal .form-group select:focus,
+.lib-modal .form-group textarea:focus {
+  border-color: var(--border-hi);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 0 0 3px rgba(124,111,247,.12);
+}
+.lib-modal .form-group input::placeholder,
+.lib-modal .form-group textarea::placeholder {
+  color: var(--text-muted);
+}
+.lib-modal .form-group select option {
+  background: var(--dark-3);
+  color: #fff;
+}
+
+/* Bootstrap modal backdrop tweak */
+.modal-backdrop.show {
+  background: #000;
+  opacity: .75;
+  backdrop-filter: blur(4px);
+}
+
+/* Make heading on lib hero same as portfolio */
+.lib-hero .hero-h1 {
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  margin-bottom: 1.25rem;
+}
+.lib-hero .hero-p { margin-bottom: 2rem; }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .lib-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+  .lib-hero-deco-wrap { justify-content: center; }
+  .lib-hero .hero-stats { justify-content: center; }
+}
+@media (max-width: 640px) {
+  .lib-toolbar { flex-direction: column; align-items: stretch; }
+  .cat-filter-bar { justify-content: center; }
+}
+
+/* shake animation for invalid form */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
