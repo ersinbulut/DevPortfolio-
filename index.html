@@ -106,25 +106,268 @@
                     </div>
                 </div>
                 <div class="hero-right">
-                    <div class="hero-3d-card tilt-card">
-                        <div class="card-inner">
-                            <div class="card-glow"></div>
-                            <div class="card-header">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                                <span class="card-filename">developer.cs</span>
-                            </div>
-                            <div class="card-code">
-                                <div class="code-line"><span class="c-purple">var</span> <span class="c-blue">developer</span> = <span class="c-green">new</span> <span class="c-yellow">Developer</span>();</div>
-                                <div class="code-line"><span class="c-blue">developer</span>.<span class="c-cyan">Name</span> = <span class="c-orange">"Ersin Bulut"</span>;</div>
-                                <div class="code-line"><span class="c-blue">developer</span>.<span class="c-cyan">Stack</span> = <span class="c-orange">"C# / .NET"</span>;</div>
-                                <div class="code-line"><span class="c-blue">developer</span>.<span class="c-cyan">Experience</span> = <span class="c-green">3</span>;</div>
-                                <div class="code-line">&nbsp;</div>
-                                <div class="code-line"><span class="c-purple">await</span> <span class="c-blue">developer</span>.<span class="c-cyan">BuildAmazing</span>();</div>
-                                <div class="code-line c-muted">// ✓ Ready to collaborate!</div>
-                            </div>
-                        </div>
+                    <!-- ═══ Yazılımcı Karakter Sahnesi ═══ -->
+                    <div class="dev-scene" id="devScene">
+                        <!-- Floating code chips (background atmosphere) -->
+                        <div class="floating-chip chip-1">{ }</div>
+                        <div class="floating-chip chip-2">&lt;/&gt;</div>
+                        <div class="floating-chip chip-3">.NET</div>
+                        <div class="floating-chip chip-4">C#</div>
+
+                        <!-- Glow behind -->
+                        <div class="dev-glow"></div>
+
+                        <!-- Main SVG character + laptop scene -->
+                        <svg class="dev-svg" viewBox="0 0 480 560" xmlns="http://www.w3.org/2000/svg" aria-label="Yazılımcı karakter">
+                            <defs>
+                                <linearGradient id="laptop-screen" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#1a1240"/>
+                                    <stop offset="1" stop-color="#0a0520"/>
+                                </linearGradient>
+                                <linearGradient id="laptop-base" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#3b3270"/>
+                                    <stop offset="1" stop-color="#1f1a3f"/>
+                                </linearGradient>
+                                <linearGradient id="laptop-base2" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#2a2354"/>
+                                    <stop offset="1" stop-color="#15102a"/>
+                                </linearGradient>
+                                <linearGradient id="hoodie-grad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#7c6ff7"/>
+                                    <stop offset="1" stop-color="#4a3fc4"/>
+                                </linearGradient>
+                                <linearGradient id="hoodie-dark" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#5a4fc9"/>
+                                    <stop offset="1" stop-color="#332788"/>
+                                </linearGradient>
+                                <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#f4c8a8"/>
+                                    <stop offset="1" stop-color="#dba582"/>
+                                </linearGradient>
+                                <linearGradient id="hair-grad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#2b1d12"/>
+                                    <stop offset="1" stop-color="#1a110a"/>
+                                </linearGradient>
+                                <radialGradient id="screen-glow" cx="0.5" cy="0.5" r="0.5">
+                                    <stop offset="0" stop-color="#7c6ff7" stop-opacity="0.7"/>
+                                    <stop offset="1" stop-color="#7c6ff7" stop-opacity="0"/>
+                                </radialGradient>
+                                <radialGradient id="key-glow" cx="0.5" cy="0.5" r="0.5">
+                                    <stop offset="0" stop-color="#00f2fe" stop-opacity="1"/>
+                                    <stop offset="1" stop-color="#00f2fe" stop-opacity="0"/>
+                                </radialGradient>
+                                <clipPath id="screen-clip">
+                                    <rect x="120" y="180" width="240" height="118" rx="3"/>
+                                </clipPath>
+                            </defs>
+
+                            <!-- Desk shadow -->
+                            <ellipse cx="240" cy="535" rx="200" ry="14" fill="#000" opacity="0.45"/>
+
+                            <!-- Background ambient glow behind head -->
+                            <ellipse cx="240" cy="100" rx="120" ry="70" fill="url(#screen-glow)" opacity="0.4"/>
+
+                            <!-- ═══ HEAD (en arkada, laptop ekranının üzerinde gözükecek) ═══ -->
+                            <g id="character-head">
+                                <!-- Hoodie hood collar (head-only, laptop will hide body) -->
+                                <path d="M 158 195 Q 145 130 240 95 Q 335 130 322 195 L 322 220 L 158 220 Z"
+                                      fill="url(#hoodie-grad)"/>
+
+                                <!-- Neck -->
+                                <rect x="218" y="170" width="32" height="35" rx="6" fill="url(#skin)"/>
+                                <rect x="218" y="190" width="32" height="15" fill="#000" opacity="0.18"/>
+
+                                <!-- Head -->
+                                <ellipse cx="234" cy="125" rx="55" ry="62" fill="url(#skin)"/>
+
+                                <!-- Hair -->
+                                <path d="M 180 113 Q 178 55 234 48 Q 292 55 288 118 Q 282 88 240 80 Q 195 88 180 113 Z"
+                                      fill="url(#hair-grad)"/>
+                                <path d="M 182 108 Q 180 132 188 150 Q 180 138 178 115 Z" fill="url(#hair-grad)"/>
+
+                                <!-- Ears -->
+                                <ellipse cx="181" cy="135" rx="6" ry="11" fill="url(#skin)"/>
+                                <ellipse cx="289" cy="135" rx="6" ry="11" fill="url(#skin)"/>
+
+                                <!-- Headphones band -->
+                                <path d="M 181 90 Q 234 38 290 90" stroke="#0e0828" stroke-width="5" fill="none" stroke-linecap="round"/>
+                                <ellipse cx="181" cy="118" rx="11" ry="15" fill="#0e0828"/>
+                                <ellipse cx="290" cy="118" rx="11" ry="15" fill="#0e0828"/>
+                                <circle cx="181" cy="118" r="3.5" fill="#7c6ff7">
+                                    <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="290" cy="118" r="3.5" fill="#00f2fe">
+                                    <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+
+                                <!-- Glasses -->
+                                <g id="glasses">
+                                    <rect x="196" y="115" width="34" height="24" rx="6" fill="rgba(124,111,247,0.15)" stroke="#0e0828" stroke-width="3"/>
+                                    <rect x="238" y="115" width="34" height="24" rx="6" fill="rgba(124,111,247,0.15)" stroke="#0e0828" stroke-width="3"/>
+                                    <line x1="230" y1="125" x2="238" y2="125" stroke="#0e0828" stroke-width="3"/>
+                                    <rect class="lens-reflect" x="199" y="118" width="14" height="6" rx="2" fill="#fff" opacity="0.7"/>
+                                    <rect class="lens-reflect" x="241" y="118" width="14" height="6" rx="2" fill="#fff" opacity="0.7"/>
+                                </g>
+
+                                <!-- Eyes -->
+                                <g id="eyes">
+                                    <ellipse class="eye eye-left"  cx="213" cy="128" rx="3" ry="4" fill="#0e0828"/>
+                                    <ellipse class="eye eye-right" cx="255" cy="128" rx="3" ry="4" fill="#0e0828"/>
+                                    <circle cx="214" cy="126" r="1" fill="#fff"/>
+                                    <circle cx="256" cy="126" r="1" fill="#fff"/>
+                                </g>
+
+                                <!-- Eyebrows -->
+                                <path d="M 201 107 Q 213 103 225 107" stroke="#1a110a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                <path d="M 243 107 Q 255 103 267 107" stroke="#1a110a" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+                                <!-- Mouth -->
+                                <path d="M 221 156 Q 234 163 247 156" stroke="#7a4a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                <!-- Cheeks -->
+                                <ellipse cx="196" cy="151" rx="8" ry="4" fill="#f9a8d4" opacity="0.3"/>
+                                <ellipse cx="272" cy="151" rx="8" ry="4" fill="#f9a8d4" opacity="0.3"/>
+                            </g>
+
+                            <!-- ═══ BODY/HOODIE (omuzlar ve gövde, laptop arkasında) ═══ -->
+                            <g id="character-body">
+                                <!-- Shoulders/torso -->
+                                <path d="M 95 235 Q 80 215 130 200 L 340 200 Q 400 215 385 235 L 395 380 Q 395 410 360 410 L 120 410 Q 85 410 85 380 Z"
+                                      fill="url(#hoodie-grad)"/>
+                                <!-- Inner shadow -->
+                                <path d="M 110 240 Q 100 225 145 215 L 325 215 Q 380 225 370 240 L 380 380 Q 380 400 355 400 L 125 400 Q 100 400 100 380 Z"
+                                      fill="#000" opacity="0.1"/>
+                                <!-- Hoodie strings -->
+                                <line x1="222" y1="210" x2="222" y2="265" stroke="#fff" stroke-width="2" opacity="0.65"/>
+                                <line x1="246" y1="210" x2="246" y2="270" stroke="#fff" stroke-width="2" opacity="0.65"/>
+                                <circle cx="222" cy="270" r="3" fill="#fff" opacity="0.75"/>
+                                <circle cx="246" cy="275" r="3" fill="#fff" opacity="0.75"/>
+                            </g>
+
+                            <!-- ═══ LAPTOP (karakterin önünde) ═══ -->
+                            <g id="laptop">
+                                <!-- Screen body -->
+                                <rect x="105" y="170" width="270" height="140" rx="10" fill="url(#laptop-base)" stroke="#0e0828" stroke-width="2"/>
+                                <!-- Screen content area -->
+                                <rect x="115" y="180" width="250" height="120" rx="4" fill="url(#laptop-screen)"/>
+                                <!-- Screen glow -->
+                                <ellipse cx="240" cy="240" rx="100" ry="40" fill="url(#screen-glow)" opacity="0.5"/>
+
+                                <!-- ─── Code on screen (clipped) ─── -->
+                                <g clip-path="url(#screen-clip)">
+                                    <g id="code-scroll-group" font-family="'JetBrains Mono', monospace" font-size="8.5">
+                                        <!-- Window dots -->
+                                        <circle cx="125" cy="192" r="2.5" fill="#ff5f57"/>
+                                        <circle cx="134" cy="192" r="2.5" fill="#febc2e"/>
+                                        <circle cx="143" cy="192" r="2.5" fill="#28c840"/>
+                                        <text x="155" y="195" fill="#546e7a" font-size="7">developer.cs</text>
+
+                                        <text x="125" y="212"><tspan fill="#c792ea">var</tspan> <tspan fill="#82aaff">developer</tspan> <tspan fill="#e2e8f0">=</tspan> <tspan fill="#c3e88d">new</tspan> <tspan fill="#ffcb6b">Developer</tspan><tspan fill="#e2e8f0">();</tspan></text>
+                                        <text x="125" y="226"><tspan fill="#82aaff">developer</tspan><tspan fill="#e2e8f0">.</tspan><tspan fill="#89ddff">Name</tspan> <tspan fill="#e2e8f0">=</tspan> <tspan fill="#f78c6c">"Ersin"</tspan><tspan fill="#e2e8f0">;</tspan></text>
+                                        <text x="125" y="240"><tspan fill="#82aaff">developer</tspan><tspan fill="#e2e8f0">.</tspan><tspan fill="#89ddff">Stack</tspan> <tspan fill="#e2e8f0">=</tspan> <tspan fill="#f78c6c">"C#/.NET"</tspan><tspan fill="#e2e8f0">;</tspan></text>
+                                        <text x="125" y="254"><tspan fill="#82aaff">developer</tspan><tspan fill="#e2e8f0">.</tspan><tspan fill="#89ddff">Years</tspan> <tspan fill="#e2e8f0">=</tspan> <tspan fill="#c3e88d">3</tspan><tspan fill="#e2e8f0">;</tspan></text>
+                                        <text x="125" y="274"><tspan fill="#c792ea">await</tspan> <tspan fill="#82aaff">dev</tspan><tspan fill="#e2e8f0">.</tspan><tspan fill="#89ddff">Build</tspan><tspan fill="#e2e8f0">();</tspan></text>
+                                        <text x="125" y="288" fill="#546e7a">// ✓ Ready!</text>
+
+                                        <!-- Extra lines that appear when scrolling -->
+                                        <text x="125" y="308"><tspan fill="#c792ea">if</tspan> <tspan fill="#e2e8f0">(</tspan><tspan fill="#82aaff">opportunity</tspan><tspan fill="#e2e8f0">) {</tspan></text>
+                                        <text x="125" y="322"><tspan fill="#e2e8f0">  </tspan><tspan fill="#82aaff">collaborate</tspan><tspan fill="#e2e8f0">();</tspan></text>
+                                        <text x="125" y="336" fill="#e2e8f0">}</text>
+                                        <text x="125" y="356" fill="#546e7a">// scroll keep going...</text>
+                                        <text x="125" y="370"><tspan fill="#c792ea">return</tspan> <tspan fill="#f78c6c">"💜"</tspan><tspan fill="#e2e8f0">;</tspan></text>
+                                    </g>
+                                    <!-- Cursor blink -->
+                                    <rect class="code-cursor" x="170" y="267" width="6" height="2" fill="#7c6ff7"/>
+                                </g>
+
+                                <!-- ─── Laptop Base (klavye üst yüzeyi) ─── -->
+                                <path d="M 80 310 L 400 310 L 415 345 L 65 345 Z" fill="url(#laptop-base2)" stroke="#0e0828" stroke-width="2"/>
+
+                                <!-- ─── Keyboard keys ─── -->
+                                <g id="keyboard">
+                                    <!-- Row of regular keys -->
+                                    <g id="key-row">
+                                        <rect x="100" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="116" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="132" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="148" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="164" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="180" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="196" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="212" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="228" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="244" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="260" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="276" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                    </g>
+
+                                    <!-- ⬇ ARROW KEYS -->
+                                    <g id="arrow-keys">
+                                        <rect id="key-up" x="296" y="316" width="14" height="10" rx="2" fill="#2a2354" stroke="#7c6ff7" stroke-width="0.6"/>
+                                        <text x="300" y="324" fill="#7c6ff7" font-size="7" font-family="'JetBrains Mono', monospace">▲</text>
+
+                                        <g id="key-down-group">
+                                            <ellipse id="key-down-glow" cx="319" cy="321" rx="14" ry="10" fill="url(#key-glow)" opacity="0"/>
+                                            <rect id="key-down" x="312" y="316" width="14" height="10" rx="2" fill="#2a2354" stroke="#00f2fe" stroke-width="0.6"/>
+                                            <text id="key-down-arrow" x="316" y="324" fill="#00f2fe" font-size="7" font-family="'JetBrains Mono', monospace">▼</text>
+                                        </g>
+
+                                        <rect x="328" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                        <rect x="344" y="316" width="14" height="10" rx="2" fill="#1f1a3f"/>
+                                    </g>
+                                </g>
+
+                                <!-- Trackpad hint -->
+                                <rect x="195" y="334" width="90" height="2" rx="1" fill="#0e0828" opacity="0.4"/>
+
+                                <!-- Brand on laptop -->
+                                <text x="240" y="307" fill="#7c6ff7" opacity="0.5" font-family="'JetBrains Mono', monospace" font-size="5" text-anchor="middle">{ ersin.dev }</text>
+                            </g>
+
+                            <!-- ═══ ARMS (laptop'un üstünde, klavyeye uzanıyor) ═══ -->
+                            <g id="arms">
+                                <!-- LEFT arm -->
+                                <g id="arm-left">
+                                    <!-- Sleeve - upper arm -->
+                                    <path d="M 110 235 Q 95 270 115 305 L 165 318 L 175 295 Q 165 268 145 248 Q 130 235 110 235 Z"
+                                          fill="url(#hoodie-grad)"/>
+                                    <!-- Cuff -->
+                                    <ellipse cx="155" cy="315" rx="20" ry="5" fill="url(#hoodie-dark)"/>
+                                    <!-- Hand on keyboard -->
+                                    <ellipse cx="155" cy="318" rx="22" ry="8" fill="url(#skin)"/>
+                                    <!-- Fingers reaching down to keys -->
+                                    <rect x="138" y="316" width="5" height="11" rx="2.5" fill="url(#skin)"/>
+                                    <rect x="146" y="314" width="5" height="13" rx="2.5" fill="url(#skin)"/>
+                                    <rect x="154" y="314" width="5" height="13" rx="2.5" fill="url(#skin)"/>
+                                    <rect x="162" y="316" width="5" height="11" rx="2.5" fill="url(#skin)"/>
+                                </g>
+
+                                <!-- RIGHT arm (animated for press) -->
+                                <g id="arm-right" class="arm-animate">
+                                    <path d="M 370 235 Q 388 270 370 305 L 320 318 L 310 295 Q 320 268 340 248 Q 355 235 370 235 Z"
+                                          fill="url(#hoodie-grad)"/>
+                                    <ellipse cx="332" cy="315" rx="20" ry="5" fill="url(#hoodie-dark)"/>
+                                    <g id="right-hand">
+                                        <ellipse cx="332" cy="318" rx="22" ry="8" fill="url(#skin)"/>
+                                        <!-- pinky -->
+                                        <rect x="346" y="316" width="5" height="11" rx="2.5" fill="url(#skin)"/>
+                                        <!-- ring -->
+                                        <rect x="338" y="314" width="5" height="13" rx="2.5" fill="url(#skin)"/>
+                                        <!-- middle (rests on left/right key) -->
+                                        <rect x="330" y="314" width="5" height="13" rx="2.5" fill="url(#skin)"/>
+                                        <!-- INDEX finger - extends to press DOWN arrow key -->
+                                        <rect id="index-finger" x="316" y="312" width="6" height="16" rx="3" fill="url(#skin)"/>
+                                    </g>
+                                </g>
+                            </g>
+
+                            <!-- Floating particle sparks -->
+                            <g class="sparks">
+                                <circle class="spark spark-1" cx="380" cy="60"  r="3"   fill="#7c6ff7"/>
+                                <circle class="spark spark-2" cx="100" cy="80"  r="2.5" fill="#00f2fe"/>
+                                <circle class="spark spark-3" cx="410" cy="140" r="2"   fill="#f9a8d4"/>
+                                <circle class="spark spark-4" cx="70"  cy="170" r="2.5" fill="#7c6ff7"/>
+                            </g>
+                        </svg>
                     </div>
                 </div>
             </div>

@@ -209,6 +209,75 @@
     if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
+  /* ── 4b. Karakter — Scroll'da Klavye Basışı ──────────── */
+  const devScene = $('#devScene');
+  const codeScroll = devScene ? devScene.querySelector('#code-scroll-group') : null;
+
+  if (devScene) {
+    let lastScrollY = window.scrollY;
+    let pressTimer = null;
+    let pulseTimer = null;
+    let codeOffset = 0;
+    const MAX_CODE_OFFSET = -90;
+    const MIN_CODE_OFFSET = 0;
+    let isScrolling = false;
+
+    function handleDevScroll() {
+      const cur = window.scrollY;
+      const delta = cur - lastScrollY;
+      lastScrollY = cur;
+
+      if (Math.abs(delta) < 1) return;
+
+      const goingDown = delta > 0;
+
+      // Karakter parmağı bas (aşağı scroll)
+      if (goingDown) {
+        devScene.classList.add('is-pressing');
+        codeOffset = Math.max(MAX_CODE_OFFSET, codeOffset - Math.min(delta * 0.4, 8));
+      } else {
+        // Yukarı scroll - basma yok ama kod geri gelir
+        codeOffset = Math.min(MIN_CODE_OFFSET, codeOffset + Math.min(-delta * 0.4, 8));
+        devScene.classList.remove('is-pressing');
+      }
+
+      if (codeScroll) {
+        codeScroll.style.transform = `translateY(${codeOffset}px)`;
+      }
+
+      // Scroll bittiğinde basışı bırak
+      if (pressTimer) clearTimeout(pressTimer);
+      pressTimer = setTimeout(() => {
+        devScene.classList.remove('is-pressing');
+      }, 250);
+
+      // Sürekli scroll'da da glow puls efekti yenilensin
+      if (goingDown) {
+        if (pulseTimer) clearTimeout(pulseTimer);
+        pulseTimer = setTimeout(() => {
+          // Re-trigger glow animation by toggling
+          devScene.classList.remove('is-pulsing');
+          requestAnimationFrame(() => devScene.classList.add('is-pulsing'));
+        }, 600);
+      }
+    }
+
+    window.addEventListener('scroll', handleDevScroll, { passive: true });
+
+    // Hero görünmüyorsa karakter scroll dinlemesin
+    const heroEl = $('#hero');
+    if (heroEl && 'IntersectionObserver' in window) {
+      const heroObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) {
+            devScene.classList.remove('is-pressing');
+          }
+        });
+      }, { threshold: 0.1 });
+      heroObs.observe(heroEl);
+    }
+  }
+
   /* ── 5. Hamburger Menu ───────────────────────────────── */
   const hamburger = $('#hamburger');
   const navLinks  = $('#navLinks');
