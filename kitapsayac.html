@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okuma Sayacı — Kaç Dakika Okudum?</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@300;400;500;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --paper: #f5efe4;
+            --paper-dark: #ebe2d1;
+            --ink: #1a1612;
+            --ink-soft: #3a322a;
+            --accent: #a83825;
+            --accent-dark: #832818;
+            --gold: #b8893a;
+            --sage: #6b7a5a;
+            --line: #d4c9b3;
+        }
+
+        * { -webkit-font-smoothing: antialiased; }
+
+        body {
+            background-color: var(--paper);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(168, 56, 37, 0.04), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(107, 122, 90, 0.05), transparent 50%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+            color: var(--ink);
+            font-family: 'Manrope', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .masthead {
+            border-bottom: 1px solid var(--ink);
+            padding: 1.25rem 0 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .masthead-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--ink-soft);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 0.5rem;
+        }
+
+        .masthead-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin: 0;
+        }
+
+        .masthead-title em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+
+        /* === CENTRAL TIMER === */
+        .timer-stage {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--line);
+            padding: 3rem 2rem 2.5rem;
+            position: relative;
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+        }
+
+        .timer-stage::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--gold) 50%, var(--sage) 100%);
+        }
+
+        .timer-stage::after {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            border: 1px solid var(--line);
+            pointer-events: none;
+        }
+
+        .timer-label {
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--ink-soft);
+            margin-bottom: 1.5rem;
+        }
+
+        .timer-label .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ink-soft);
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .timer-label.active .dot {
+            background: var(--accent);
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(168, 56, 37, 0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(168, 56, 37, 0); }
+        }
+
+        .timer-display {
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 300;
+            font-size: clamp(4.5rem, 16vw, 11rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            color: var(--ink);
+            font-variant-numeric: tabular-nums;
+            margin: 0;
+            text-shadow: 0 2px 0 rgba(26, 22, 18, 0.04);
+        }
+
+        .timer-display .sep {
+            color: var(--accent);
+            font-weight: 400;
+            animation: blink 1s steps(2) infinite;
+        }
+
+        .timer-display.paused .sep {
+            animation: none;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.25; }
+        }
+
+        .timer-sub {
+            text-align: center;
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--ink-soft);
+            margin-top: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-timer {
+            background: var(--ink);
+            color: var(--paper);
+            border: 1px solid var(--ink);
+            border-radius: 0;
+            padding: 0.9rem 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn-timer:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--paper);
+        }
+
+        .btn-timer.secondary {
+            background: transparent;
+            color: var(--ink);
+        }
+
+        .btn-timer.secondary:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .btn-timer.danger:hover {
+            background: var(--accent-dark);
+            border-color: var(--accent-dark);
+        }
+
+        .btn-timer:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .btn-timer:disabled:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .btn-timer.secondary:disabled:hover {
+            background: transparent;
+            color: var(--ink);
+        }
+
+        /* Active book bar */
+        .active-book-bar {
+            margin-top: 1.75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--line);
+            text-align: center;
+        }
+
+        .active-book-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--ink-soft);
+            margin-bottom: 0.4rem;
+        }
+
+        .active-book-title {
+            font-family: 'Fraunces', serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        .active-book-title em {
+            font-style: italic;
+            color: var(--ink-soft);
+            font-weight: 400;
+        }
+
+        .book-select {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--line);
+            border-radius: 0;
+            font-family: 'Manrope', sans-serif;
+            color: var(--ink);
+            padding: 0.5rem 0.85rem;
+            max-width: 320px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .book-select:focus {
+            outline: none;
+            border-color: var(--ink);
+            box-shadow: none;
+        }
+
+        /* Stats */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .stat-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--line);
+            padding: 1.25rem 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .stat-card .label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--ink-soft);
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-card .value {
+            font-family: 'Fraunces', serif;
+            font-size: 2.25rem;
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .stat-card .value-unit {
+            font-size: 0.85rem;
+            color: var(--ink-soft);
+            font-family: 'Manrope', sans-serif;
+            margin-left: 0.3rem;
+            font-weight: 400;
+        }
+
+        .stat-card.accent .value { color: var(--accent); }
+        .stat-card.gold .value { color: var(--gold); }
+        .stat-card.sage .value { color: var(--sage); }
+
+        /* Section headers */
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid var(--ink);
+        }
+
+        .section-header h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+
+        .section-header .meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--ink-soft);
+            margin-left: auto;
+        }
+
+        /* Add book form */
+        .add-form {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--line);
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--ink-soft);
+            margin-bottom: 0.35rem;
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--line);
+            border-radius: 0;
+            font-family: 'Manrope', sans-serif;
+            color: var(--ink);
+            padding: 0.55rem 0.8rem;
+        }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: var(--ink);
+            box-shadow: none;
+            color: var(--ink);
+        }
+
+        .btn-add {
+            background-color: var(--ink);
+            color: var(--paper);
+            border: 1px solid var(--ink);
+            border-radius: 0;
+            padding: 0.6rem 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-add:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: var(--paper);
+        }
+
+        /* Session history */
+        .session-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .session-item {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--accent);
+            padding: 0.9rem 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .session-item:hover {
+            background: rgba(255, 255, 255, 0.85);
+            transform: translateX(2px);
+        }
+
+        .session-duration {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--ink);
+            min-width: 110px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .session-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .session-book {
+            font-family: 'Fraunces', serif;
+            font-size: 1rem;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .session-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--ink-soft);
+            margin-top: 0.2rem;
+        }
+
+        .session-delete {
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--ink-soft);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .session-delete:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--paper);
+        }
+
+        /* Empty */
+        .empty-state {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border: 1px dashed var(--line);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .empty-state .icon {
+            font-size: 2.25rem;
+            color: var(--ink-soft);
+            opacity: 0.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state h3 {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--ink-soft);
+            margin-bottom: 0.25rem;
+        }
+
+        .empty-state p {
+            color: var(--ink-soft);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--ink);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--ink-soft);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            z-index: 1080;
+        }
+
+        .custom-toast {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.75rem 1.15rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+            animation: fadeUp 0.3s ease-out;
+            border-left: 3px solid var(--accent);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .session-item, .stat-card {
+            animation: fadeUp 0.35s ease-out both;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-3" style="max-width: 1100px;">
+        <header class="masthead">
+            <div class="masthead-top">
+                <span><i class="bi bi-hourglass-split"></i> Okuma Süresi Takip</span>
+                <span id="currentDate">—</span>
+            </div>
+            <h1 class="masthead-title">Okuma <em>Sayacı</em></h1>
+        </header>
+
+        <!-- CENTRAL TIMER -->
+        <section class="timer-stage">
+            <div class="timer-label" id="timerLabel">
+                <span class="dot"></span>
+                <span id="timerStatus">Başlamaya Hazır</span>
+            </div>
+
+            <div class="timer-display paused" id="timerDisplay">
+                00<span class="sep">:</span>00<span class="sep">:</span>00
+            </div>
+
+            <p class="timer-sub" id="timerSub">Okumaya başlamak için butona basın</p>
+
+            <div class="timer-controls">
+                <button class="btn-timer" id="btnStart">
+                    <i class="bi bi-play-fill"></i> Başlat
+                </button>
+                <button class="btn-timer secondary" id="btnPause" disabled>
+                    <i class="bi bi-pause-fill"></i> Duraklat
+                </button>
+                <button class="btn-timer secondary danger" id="btnStop" disabled>
+                    <i class="bi bi-stop-fill"></i> Bitir & Kaydet
+                </button>
+                <button class="btn-timer secondary" id="btnReset" disabled>
+                    <i class="bi bi-arrow-counterclockwise"></i> Sıfırla
+                </button>
+            </div>
+
+            <div class="active-book-bar">
+                <div class="active-book-label">Şu an okunan kitap</div>
+                <select class="form-select book-select" id="activeBookSelect">
+                    <option value="">— Kitap seç (opsiyonel) —</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stat-grid">
+            <div class="stat-card accent">
+                <div class="label">Bugün</div>
+                <div class="value" id="statToday">0<span class="value-unit">dk</span></div>
+            </div>
+            <div class="stat-card gold">
+                <div class="label">Bu Hafta</div>
+                <div class="value" id="statWeek">0<span class="value-unit">dk</span></div>
+            </div>
+            <div class="stat-card sage">
+                <div class="label">Toplam Süre</div>
+                <div class="value" id="statTotal">0<span class="value-unit">dk</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Seans Sayısı</div>
+                <div class="value" id="statCount">0</div>
+            </div>
+        </section>
+
+        <!-- Add book form -->
+        <section>
+            <div class="section-header">
+                <h2>Kitap Ekle</h2>
+                <span class="meta">Sayaç için kitap kaydı</span>
+            </div>
+            <form class="add-form" id="addForm">
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Kitap Adı</label>
+                        <input type="text" class="form-control" id="bookTitle" placeholder="Örn. Yüzyıllık Yalnızlık" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Yazar</label>
+                        <input type="text" class="form-control" id="bookAuthor" placeholder="Örn. Márquez" required>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn-add">
+                            <i class="bi bi-plus-lg"></i> Ekle
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Session history -->
+        <section>
+            <div class="section-header">
+                <h2>Okuma Seansları</h2>
+                <span class="meta" id="sessionMeta">0 seans</span>
+            </div>
+            <div id="sessionList" class="session-list"></div>
+            <div id="emptyState" class="empty-state" style="display:none;">
+                <div class="icon"><i class="bi bi-stopwatch"></i></div>
+                <h3>Henüz seans yok</h3>
+                <p>Yukarıdaki sayacı başlatarak ilk okuma seansınızı kaydedin.</p>
+            </div>
+        </section>
+
+        <footer>
+            <span>© Okuma Sayacı — Yerel Depolama</span>
+            <span id="footerYear">—</span>
+        </footer>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // === State ===
+        let sessions = JSON.parse(localStorage.getItem('rt_sessions') || '[]');
+        let books = JSON.parse(localStorage.getItem('rt_books') || '[]');
+        let activeBookId = localStorage.getItem('rt_active_book') || '';
+
+        // Timer state
+        let timerInterval = null;
+        let startTime = 0;         // ms epoch when current "run" began
+        let accumulated = 0;       // ms accumulated across pauses for current session
+        let isRunning = false;
+        let hasSession = false;    // true if there's an active (possibly paused) session
+
+        // === Helpers ===
+        const $ = id => document.getElementById(id);
+        const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+        const saveSessions = () => localStorage.setItem('rt_sessions', JSON.stringify(sessions));
+        const saveBooks = () => localStorage.setItem('rt_books', JSON.stringify(books));
+
+        function pad(n) { return String(n).padStart(2, '0'); }
+
+        function formatHMS(ms) {
+            const totalSec = Math.floor(ms / 1000);
+            const h = Math.floor(totalSec / 3600);
+            const m = Math.floor((totalSec % 3600) / 60);
+            const s = totalSec % 60;
+            return `${pad(h)}<span class="sep">:</span>${pad(m)}<span class="sep">:</span>${pad(s)}`;
+        }
+
+        function formatMinutes(ms) {
+            return Math.round(ms / 60000);
+        }
+
+        function formatDurationShort(ms) {
+            const totalSec = Math.floor(ms / 1000);
+            const h = Math.floor(totalSec / 3600);
+            const m = Math.floor((totalSec % 3600) / 60);
+            const s = totalSec % 60;
+            if (h > 0) return `${h}s ${pad(m)}dk`;
+            if (m > 0) return `${m} dk ${pad(s)}sn`;
+            return `${s} sn`;
+        }
+
+        function fmtDate() {
+            return new Date().toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' });
+        }
+
+        function fmtSessionDate(ts) {
+            const d = new Date(ts);
+            const today = new Date();
+            const yest = new Date(); yest.setDate(yest.getDate() - 1);
+            const sameDay = (a, b) => a.toDateString() === b.toDateString();
+            const time = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+            if (sameDay(d, today)) return `Bugün · ${time}`;
+            if (sameDay(d, yest)) return `Dün · ${time}`;
+            return d.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short' }) + ' · ' + time;
+        }
+
+        // === Toast ===
+        function toast(msg) {
+            const t = document.createElement('div');
+            t.className = 'custom-toast';
+            t.textContent = msg;
+            $('toastContainer').appendChild(t);
+            setTimeout(() => {
+                t.style.opacity = '0';
+                t.style.transition = 'opacity 0.3s';
+                setTimeout(() => t.remove(), 300);
+            }, 2400);
+        }
+
+        // === Timer logic ===
+        function getCurrentMs() {
+            if (isRunning) return accumulated + (Date.now() - startTime);
+            return accumulated;
+        }
+
+        function updateDisplay() {
+            const ms = getCurrentMs();
+            $('timerDisplay').innerHTML = formatHMS(ms);
+            $('timerDisplay').classList.toggle('paused', !isRunning);
+        }
+
+        function setStatus(text, active) {
+            $('timerStatus').textContent = text;
+            $('timerLabel').classList.toggle('active', active);
+        }
+
+        function updateSub() {
+            const ms = getCurrentMs();
+            if (ms === 0) {
+                $('timerSub').textContent = 'Okumaya başlamak için butona basın';
+            } else {
+                const mins = formatMinutes(ms);
+                if (mins === 0) $('timerSub').textContent = `${Math.floor(ms/1000)} saniyedir okuyorsunuz`;
+                else $('timerSub').textContent = `${mins} dakikadır okuyorsunuz`;
+            }
+        }
+
+        function tick() {
+            updateDisplay();
+            updateSub();
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            startTime = Date.now();
+            isRunning = true;
+            hasSession = true;
+            timerInterval = setInterval(tick, 1000);
+            tick();
+            setStatus('Okunuyor', true);
+            updateButtons();
+        }
+
+        function pauseTimer() {
+            if (!isRunning) return;
+            accumulated += Date.now() - startTime;
+            isRunning = false;
+            clearInterval(timerInterval);
+            timerInterval = null;
+            updateDisplay();
+            updateSub();
+            setStatus('Duraklatıldı', false);
+            updateButtons();
+        }
+
+        function stopAndSave() {
+            if (!hasSession) return;
+            if (isRunning) {
+                accumulated += Date.now() - startTime;
+                isRunning = false;
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            const duration = accumulated;
+            if (duration < 1000) {
+                toast('Çok kısa, kaydedilmedi');
+                resetTimer();
+                return;
+            }
+            const book = books.find(b => b.id === activeBookId);
+            sessions.push({
+                id: uid(),
+                durationMs: duration,
+                bookId: activeBookId || null,
+                bookTitle: book ? book.title : null,
+                bookAuthor: book ? book.author : null,
+                endedAt: Date.now()
+            });
+            saveSessions();
+            toast(`${formatDurationShort(duration)} kaydedildi`);
+            resetTimer();
+            renderSessions();
+            renderStats();
+        }
+
+        function resetTimer() {
+            isRunning = false;
+            hasSession = false;
+            accumulated = 0;
+            startTime = 0;
+            clearInterval(timerInterval);
+            timerInterval = null;
+            $('timerDisplay').innerHTML = `00<span class="sep">:</span>00<span class="sep">:</span>00`;
+            $('timerDisplay').classList.add('paused');
+            setStatus('Başlamaya Hazır', false);
+            $('timerSub').textContent = 'Okumaya başlamak için butona basın';
+            updateButtons();
+        }
+
+        function updateButtons() {
+            $('btnStart').disabled = isRunning;
+            $('btnStart').innerHTML = hasSession && !isRunning
+                ? '<i class="bi bi-play-fill"></i> Devam'
+                : '<i class="bi bi-play-fill"></i> Başlat';
+            $('btnPause').disabled = !isRunning;
+            $('btnStop').disabled = !hasSession;
+            $('btnReset').disabled = !hasSession;
+        }
+
+        // === Buttons ===
+        $('btnStart').addEventListener('click', startTimer);
+        $('btnPause').addEventListener('click', pauseTimer);
+        $('btnStop').addEventListener('click', stopAndSave);
+        $('btnReset').addEventListener('click', () => {
+            if (confirm('Sayaç sıfırlansın mı? Bu süre kaydedilmeyecek.')) {
+                resetTimer();
+            }
+        });
+
+        // === Books ===
+        function renderBookOptions() {
+            const sel = $('activeBookSelect');
+            sel.innerHTML = '<option value="">— Kitap seç (opsiyonel) —</option>' +
+                books.map(b => `<option value="${b.id}" ${b.id === activeBookId ? 'selected' : ''}>${escapeHtml(b.title)} — ${escapeHtml(b.author)}</option>`).join('');
+        }
+
+        $('activeBookSelect').addEventListener('change', e => {
+            activeBookId = e.target.value;
+            localStorage.setItem('rt_active_book', activeBookId);
+        });
+
+        $('addForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const title = $('bookTitle').value.trim();
+            const author = $('bookAuthor').value.trim();
+            if (!title || !author) return;
+            const book = { id: uid(), title, author, addedAt: Date.now() };
+            books.push(book);
+            saveBooks();
+            renderBookOptions();
+            activeBookId = book.id;
+            $('activeBookSelect').value = book.id;
+            localStorage.setItem('rt_active_book', activeBookId);
+            e.target.reset();
+            toast(`"${title}" eklendi`);
+        });
+
+        // === Sessions ===
+        function renderSessions() {
+            const list = $('sessionList');
+            const empty = $('emptyState');
+            if (sessions.length === 0) {
+                list.innerHTML = '';
+                empty.style.display = 'block';
+                $('sessionMeta').textContent = '0 seans';
+                return;
+            }
+            empty.style.display = 'none';
+            const sorted = [...sessions].sort((a, b) => b.endedAt - a.endedAt);
+            list.innerHTML = sorted.map(s => `
+                <div class="session-item">
+                    <div class="session-duration">${formatDurationShort(s.durationMs)}</div>
+                    <div class="session-info">
+                        <div class="session-book">${s.bookTitle ? escapeHtml(s.bookTitle) : '<em style="color:var(--ink-soft);font-style:italic;">Kitap belirtilmemiş</em>'}</div>
+                        <div class="session-date">${fmtSessionDate(s.endedAt)}${s.bookAuthor ? ' · ' + escapeHtml(s.bookAuthor) : ''}</div>
+                    </div>
+                    <button class="session-delete" data-id="${s.id}" title="Sil">
+                        <i class="bi bi-trash3"></i>
+                    </button>
+                </div>
+            `).join('');
+            $('sessionMeta').textContent = `${sessions.length} seans`;
+        }
+
+        $('sessionList').addEventListener('click', e => {
+            const btn = e.target.closest('.session-delete');
+            if (!btn) return;
+            if (!confirm('Bu seans silinsin mi?')) return;
+            sessions = sessions.filter(s => s.id !== btn.dataset.id);
+            saveSessions();
+            renderSessions();
+            renderStats();
+            toast('Seans silindi');
+        });
+
+        // === Stats ===
+        function renderStats() {
+            const now = new Date();
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+            const weekStart = new Date(todayStart);
+            const day = weekStart.getDay() || 7; // pazartesi = 1
+            weekStart.setDate(weekStart.getDate() - (day - 1));
+
+            let todayMs = 0, weekMs = 0, totalMs = 0;
+            sessions.forEach(s => {
+                totalMs += s.durationMs;
+                if (s.endedAt >= todayStart) todayMs += s.durationMs;
+                if (s.endedAt >= weekStart.getTime()) weekMs += s.durationMs;
+            });
+
+            $('statToday').innerHTML = `${formatMinutes(todayMs)}<span class="value-unit">dk</span>`;
+            $('statWeek').innerHTML = `${formatMinutes(weekMs)}<span class="value-unit">dk</span>`;
+            $('statTotal').innerHTML = totalMs >= 3600000
+                ? `${(totalMs / 3600000).toFixed(1)}<span class="value-unit">saat</span>`
+                : `${formatMinutes(totalMs)}<span class="value-unit">dk</span>`;
+            $('statCount').textContent = sessions.length;
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // === Keyboard shortcuts ===
+        document.addEventListener('keydown', e => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isRunning) pauseTimer();
+                else startTimer();
+            } else if (e.key === 's' || e.key === 'S') {
+                if (hasSession) stopAndSave();
+            }
+        });
+
+        // === Init ===
+        $('currentDate').textContent = fmtDate();
+        $('footerYear').textContent = new Date().getFullYear();
+        renderBookOptions();
+        renderSessions();
+        renderStats();
+        updateButtons();
+    </script>
+</body>
+</html>
