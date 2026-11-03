@@ -1,3 +1,0 @@
-git add .
-git commit -m "site güncellendi.."
-git push origin main
